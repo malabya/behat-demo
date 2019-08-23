@@ -1,0 +1,21 @@
+name: behat
+recipe: drupal8
+config:
+  webroot: web
+services:
+  appserver:
+    overrides:
+      environment:
+        BEHAT_PARAMS: '{"extensions" : {"Behat\\MinkExtension" : {"base_url" : "https://behat.lndo.site"}, "Drupal\\DrupalExtension" : {"drush" : { "root": "/app/web" }}}}'
+  database:
+    type: mariadb:10.2
+    creds:
+      user: behat
+      password: behat
+      database: behat
+tooling:
+  behat:
+    service: appserver
+    description: Run behat tests locally.
+    cmd:
+      - /app/vendor/bin/behat
